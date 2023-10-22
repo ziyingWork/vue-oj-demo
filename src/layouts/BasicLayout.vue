@@ -37,11 +37,13 @@
         </template>
         <template #right>
           <div class="va-spacing-x-2 mb-6">
-            <span
-              v-for="i in 2"
-              :key="i"
-              class="rectangle"
-            >va-spacing-x-2</span>
+            <va-button
+              preset="primary"
+              class="mr-6 mb-2"
+            >
+              登录
+            </va-button>
+            <va-button> 注册 </va-button>
           </div>
         </template>
       </VaNavbar>
@@ -63,9 +65,9 @@
 
     <template #content>
       <main>
-        <article>
-          <slot />
-        </article>
+        <div class="st-main">
+          <router-view/>
+        </div>  
       </main>
     </template>
   </VaLayout>
@@ -73,7 +75,10 @@
 
 
 <style scoped>
+  .st-main {
+    margin: 13px;
+  }
 
-
+  
 
 </style>
