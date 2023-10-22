@@ -1,20 +1,27 @@
 <script setup lang="ts">
-const value = 0
-const tabs = ['Login', 'Regist']
+// import LoginUtils from '../utils/LoginUtils'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
-type KeyValuePairs = {
-    [key: string]: any;
-};
+const tabValue = ref(0)
+
+const router = useRouter();
+
+const jumpToRegistIndex = () => {
+  router.push('/regist-index')
+  tabValue.value = 1
+} 
 
 
 </script>
     
 <template>
   <div class="st-login-layer">
-    <va-tabs v-model="value" stateful grow>
+    <va-tabs v-model="tabValue" stateful grow>
         <template #tabs>
         <va-tab
-            v-for="tab in tabs"
+            class="prevent-click-va-tab"
+            v-for="tab in ['Login','Regist']"
             :key="tab"
         >
             {{ tab }}
@@ -72,7 +79,9 @@ type KeyValuePairs = {
             color="TextPrimary" 
             preset="secondary"
             hover-behavior="opacity"
-            :hover-opacity="0.4">
+            :hover-opacity="0.4"
+            @click="jumpToRegistIndex"
+            >
             Regist
           </va-button>
           <va-button>Login</va-button>
@@ -88,9 +97,13 @@ type KeyValuePairs = {
      margin: 100px auto;
   }
 
+  .prevent-click-va-tab {
+    pointer-events: none;
+  }
+
   .st-login-form {
     padding-left: 22px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
   }
 
   .st-va-card-title {
@@ -106,16 +119,6 @@ type KeyValuePairs = {
     margin-top: 30px;
     margin-left: 15px;
   }
-
-  /* .st-captcha-code {
-    width: 100%;
-  }
-
-  .st-captcha-show, .st-captcha-button {
-    width: 50%;
-    float: left;
-    box-sizing: border-box;
-  } */
 
 </style>
 

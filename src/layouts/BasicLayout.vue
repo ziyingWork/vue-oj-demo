@@ -1,23 +1,39 @@
 <script setup lang="ts">
-  import { ref, watchEffect } from 'vue'
-  import { useBreakpoint } from 'vuestic-ui'
+import { ref, watchEffect } from 'vue'
+import { useBreakpoint } from 'vuestic-ui'
+import { useRouter } from 'vue-router';
 
-  const breakpoints = useBreakpoint()
+const breakpoints = useBreakpoint()
 
-  const isSidebarVisible = ref(breakpoints.smUp)
+const isSidebarVisible = ref(breakpoints.smUp)
 
-  watchEffect(() => {
-    isSidebarVisible.value = breakpoints.smUp
-  })
+watchEffect(() => {
+  isSidebarVisible.value = breakpoints.smUp
+})
 
-  const menu = [
-    { icon: 'home', title: '主页' },
-    { icon: 'book', title: '浏览题目' },
-    { icon: 'va-check-circle', title: '浏览题目提交' },
-    { icon: 'settings', title: '创建题目' },
-    { icon: 'va-calendar', title: '管理题目' },
-    { icon: 'logout', title: '退出' },
-  ]
+const menu = [
+  { icon: 'home', title: '主页' },
+  { icon: 'book', title: '浏览题目' },
+  { icon: 'va-check-circle', title: '浏览题目提交' },
+  { icon: 'settings', title: '创建题目' },
+  { icon: 'va-calendar', title: '管理题目' },
+  { icon: 'logout', title: '退出' },
+]
+
+const router = useRouter();
+
+const jumpToLoginIndex = () => {
+  router.push('/login-index');
+} 
+
+const jumpToRegistIndex = () => {
+  router.push('/regist-index');
+} 
+
+
+
+
+
 </script>
 
 <template>
@@ -40,10 +56,11 @@
             <va-button
               preset="primary"
               class="mr-6 mb-2"
+              @click="jumpToLoginIndex"
             >
               登录
             </va-button>
-            <va-button> 注册 </va-button>
+            <va-button @click="jumpToRegistIndex"> 注册 </va-button>
           </div>
         </template>
       </VaNavbar>

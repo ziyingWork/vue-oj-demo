@@ -1,15 +1,30 @@
 <script setup lang="ts">
-  const value = 0;
+import { useRouter } from 'vue-router';
+import { ref } from 'vue'
+
+
+const tabValue = ref(1)
+
+const router = useRouter();
+
+const jumpToLoginIndex = () => {
+  router.push('/login-index')
+  tabValue.value = 0
+} 
+
+
+
   </script>
       
   <template>
     <div class="st-login-layer">
-      <va-tabs v-model="value" stateful grow>
+      <va-tabs v-model="tabValue" stateful grow>
           <template #tabs>
-          <va-tab
-              v-for="tab in ['Login', 'Regist']"
-              :key="tab"
-          >
+            <va-tab
+                class="prevent-click-va-tab"
+                v-for="tab in ['Login','Regist']"
+                :key="tab"
+            >
               {{ tab }}
           </va-tab>
           </template>
@@ -49,10 +64,12 @@
                 color="TextPrimary" 
                 preset="secondary"
                 hover-behavior="opacity"
-                :hover-opacity="0.4">
-                Regist
+                :hover-opacity="0.4"
+                @click="jumpToLoginIndex"
+                >
+                Login
               </va-button>
-              <va-button>Login</va-button>
+              <va-button>Regist</va-button>
             </va-card-actions>
           </div>
         </va-form>
@@ -64,6 +81,10 @@
     .st-login-layer {
        width: 26%;
        margin: 100px auto;
+    }
+
+    .prevent-click-va-tab {
+      pointer-events: none;
     }
   
     .st-login-form {
