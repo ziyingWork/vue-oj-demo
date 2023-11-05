@@ -1,8 +1,18 @@
 <script setup lang="ts">
-
-</script>
+    import CodeEditor from "@/components/CodeEditor.vue"
+    import { ref } from "vue"
     
-<template>
-    <h1>xixiixixix</h1>
-</template>
+    const value = ref("")
     
+    const onChange = (v: string) => {
+        value.value = v
+    }
+    
+    </script>
+        
+    <template>
+        <div>
+            <CodeEditor :defaultValue="value" :handleChange="onChange"/>
+        </div>
+    </template>
+        

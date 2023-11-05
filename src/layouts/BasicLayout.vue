@@ -2,6 +2,9 @@
 import { ref, watchEffect } from 'vue'
 import { useBreakpoint } from 'vuestic-ui'
 import { useRouter } from 'vue-router';
+import { userStore } from '@/stores/user'
+
+let page = ref()
 
 const breakpoints = useBreakpoint()
 
@@ -30,6 +33,29 @@ const jumpToRegistIndex = () => {
   router.push('/regist-index');
 } 
 
+const jumpPage = (pageIndex) => {
+  page.value=pageIndex
+  console.log(page.value)
+  navigateToPage(pageIndex)
+}
+
+// 映射路由
+const pageRoutes = {
+  0: '/',
+  1: '/browse-questions',
+  2: '/browse-questions-to-submit',
+  3: '/create-questions',
+  4: '/manage-questions',
+  // ... 其他页面映射
+}
+
+const navigateToPage = (pageIndex) => {
+  const routePath = pageRoutes[pageIndex] 
+  router.push(routePath)
+}
+
+const store = userStore() 
+
 
 
 
@@ -52,15 +78,34 @@ const jumpToRegistIndex = () => {
           />
         </template>
         <template #right>
-          <div class="va-spacing-x-2 mb-6">
-            <va-button
-              preset="primary"
-              class="mr-6 mb-2"
-              @click="jumpToLoginIndex"
-            >
-              登录
-            </va-button>
-            <va-button @click="jumpToRegistIndex"> 注册 </va-button>
+          <div id="right-no-login" v-show="!store.whetherLogin">
+            <div class="va-spacing-x-2 mb-6">
+              <va-button
+                preset="primary"
+                class="mr-6 mb-2"
+                @click="jumpToLoginIndex"
+              >
+                登录
+              </va-button>
+              <va-button @click="jumpToRegistIndex"> 注册 </va-button>
+            </div>
+          </div>
+          <div id="right-already-login" v-show="store.whetherLogin">
+            <va-list-item class="list__item">
+              <va-list-item-section avatar>
+                <va-avatar>
+                  <img src="https://i.pinimg.com/280x280_RS/08/e9/ba/08e9ba9cbd24db8de0c250570af460a4.jpg">
+                </va-avatar>
+              </va-list-item-section>
+              <va-list-item-section>
+                <va-list-item-label>
+                  Julien
+                </va-list-item-label>
+                <va-list-item-label caption>
+                  1249353194@qq.com
+                </va-list-item-label>
+              </va-list-item-section>
+            </va-list-item>
           </div>
         </template>
       </VaNavbar>
@@ -68,16 +113,17 @@ const jumpToRegistIndex = () => {
     </template>
 
     <template #left>
-      <VaSidebar v-model="isSidebarVisible">
-        <VaSidebarItem v-for="{ icon, title } in menu" :key="icon">
-          <VaSidebarItemContent>
-            <VaIcon :name="icon" />
-            <VaSidebarItemTitle>
-              {{ title }}
-            </VaSidebarItemTitle>
-          </VaSidebarItemContent>
-        </VaSidebarItem>
-      </VaSidebar>
+        <VaSidebar v-model="isSidebarVisible">
+          <!-- <VaSidebarItem v-for="{ icon, title } in menu" :key="icon" :active="page === 1" > -->
+          <VaSidebarItem v-for="(item, index) in menu" :key="icon" :active="page===index" @click="jumpPage(index)">
+            <VaSidebarItemContent>
+              <VaIcon :name="item.icon" />
+              <VaSidebarItemTitle>
+                {{ item.title }}
+              </VaSidebarItemTitle>
+            </VaSidebarItemContent>
+          </VaSidebarItem>
+        </VaSidebar>
     </template>
 
     <template #content>

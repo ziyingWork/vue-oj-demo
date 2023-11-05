@@ -6,7 +6,8 @@ import CreateQuestions from '@/views/CreateQuestions.vue'
 import ManageQuestions from '@/views/ManageQuestions.vue'
 import LoginIndex from '@/views/LoginIndex.vue'
 import RegistIndex from '@/views/RegistIndex.vue'
-
+import NoAuthView from '@/views/NoAuthView.vue'
+import MdEditor from '@/components/MdEditor.vue'
 
 
 export const routes: Array<RouteRecordRaw> = [
@@ -44,5 +45,10 @@ export const routes: Array<RouteRecordRaw> = [
         path: '/regist-index',
         name: 'registIndex',
         component: RegistIndex 
+    },
+    {
+        path: '/no-auth-view',
+        name: 'noAuthView',
+        component: NoAuthView 
     },
 ]
